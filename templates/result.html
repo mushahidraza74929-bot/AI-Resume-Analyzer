@@ -1,0 +1,2557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Resume Analysis Report | AI Resume Analyzer</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            min-height: 100vh;
+
+            color: #ffffff;
+
+            background:
+                radial-gradient(
+                    circle at 5% 5%,
+                    rgba(88,104,255,0.30),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 95% 90%,
+                    rgba(145,65,220,0.27),
+                    transparent 32%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #070a17,
+                    #0d1022 50%,
+                    #080a16
+                );
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+
+            min-height: 72px;
+
+            padding:
+                0 5%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            background:
+                rgba(7,10,22,0.88);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            backdrop-filter: blur(20px);
+        }
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        .logo-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6675ff,
+                    #914be0
+                );
+
+            box-shadow:
+                0 8px 25px
+                rgba(102,117,255,0.25);
+        }
+
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+        }
+
+
+        .nav-links a {
+
+            color: #aeb7d1;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            padding:
+                9px 13px;
+
+            border-radius: 9px;
+
+            transition: 0.25s;
+        }
+
+
+        .nav-links a:hover {
+
+            color: white;
+
+            background:
+                rgba(255,255,255,0.06);
+        }
+
+
+        .active {
+
+            color: white !important;
+
+            background:
+                rgba(102,117,255,0.15);
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+
+            width: 90%;
+
+            max-width: 1180px;
+
+            margin: auto;
+
+            padding:
+                45px 0 70px;
+        }
+
+
+        /* =========================
+           REPORT HEADER
+        ========================= */
+
+        .report-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 25px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .header-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+        }
+
+
+        .report-icon {
+
+            width: 62px;
+
+            height: 62px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 18px;
+
+            font-size: 29px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(96,112,255,0.25),
+                    rgba(145,72,220,0.25)
+                );
+
+            border:
+                1px solid
+                rgba(120,135,255,0.20);
+        }
+
+
+        .report-header h1 {
+
+            font-size: 30px;
+
+            margin-bottom: 6px;
+
+            letter-spacing: -0.7px;
+        }
+
+
+        .report-header p {
+
+            color: #858fa9;
+
+            font-size: 12px;
+        }
+
+
+        .header-actions {
+
+            display: flex;
+
+            gap: 8px;
+
+            flex-wrap: wrap;
+
+            justify-content: flex-end;
+        }
+
+
+        .btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 7px;
+
+            padding:
+                11px 15px;
+
+            border-radius: 10px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            transition: 0.25s;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            background:
+                rgba(255,255,255,0.055);
+        }
+
+
+        .btn:hover {
+
+            transform:
+                translateY(-2px);
+
+            background:
+                rgba(255,255,255,0.09);
+        }
+
+
+        .primary-btn {
+
+            border: none;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #596aff,
+                    #8748dc
+                );
+
+            box-shadow:
+                0 10px 28px
+                rgba(89,106,255,0.22);
+        }
+
+
+        .primary-btn:hover {
+
+            box-shadow:
+                0 15px 35px
+                rgba(89,106,255,0.32);
+        }
+
+
+        /* =========================
+           RESUME FILE BAR
+        ========================= */
+
+        .file-bar {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding:
+                15px 18px;
+
+            margin-bottom: 20px;
+
+            border-radius: 14px;
+
+            background:
+                rgba(255,255,255,0.045);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+        }
+
+
+        .file-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 11px;
+
+            min-width: 0;
+        }
+
+
+        .file-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 10px;
+
+            background:
+                rgba(102,117,255,0.12);
+
+            font-size: 18px;
+        }
+
+
+        .file-name {
+
+            color: #e4e8f3;
+
+            font-size: 13px;
+
+            font-weight: 600;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+        }
+
+
+        .file-label {
+
+            margin-top: 3px;
+
+            color: #69738d;
+
+            font-size: 10px;
+        }
+
+
+        .status {
+
+            padding:
+                6px 10px;
+
+            border-radius: 20px;
+
+            color: #8ff0bb;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            background:
+                rgba(50,205,120,0.08);
+
+            border:
+                1px solid
+                rgba(50,205,120,0.13);
+        }
+
+
+        /* =========================
+           SCORE CARDS
+        ========================= */
+
+        .score-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 16px;
+
+            margin-bottom: 22px;
+        }
+
+
+        .score-card {
+
+            position: relative;
+
+            overflow: hidden;
+
+            min-height: 205px;
+
+            padding: 23px;
+
+            border-radius: 20px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.075),
+                    rgba(255,255,255,0.035)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            box-shadow:
+                0 20px 50px
+                rgba(0,0,0,0.20);
+
+            backdrop-filter: blur(15px);
+
+            transition: 0.3s;
+        }
+
+
+        .score-card:hover {
+
+            transform:
+                translateY(-4px);
+
+            border-color:
+                rgba(125,140,255,0.20);
+        }
+
+
+        .score-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 120px;
+
+            height: 120px;
+
+            right: -55px;
+
+            bottom: -60px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(101,117,255,0.11);
+        }
+
+
+        .score-title {
+
+            color: #7d87a2;
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            letter-spacing: 0.6px;
+
+            text-transform: uppercase;
+        }
+
+
+        .score-content {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 22px;
+
+            margin-top: 18px;
+        }
+
+
+        .circle {
+
+            width: 105px;
+
+            height: 105px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background:
+                conic-gradient(
+                    #6575ff calc(var(--score) * 1%),
+                    rgba(255,255,255,0.07) 0
+                );
+
+            position: relative;
+        }
+
+
+        .circle::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 82px;
+
+            height: 82px;
+
+            border-radius: 50%;
+
+            background:
+                #111528;
+        }
+
+
+        .circle-value {
+
+            position: relative;
+
+            z-index: 2;
+
+            font-size: 22px;
+
+            font-weight: 700;
+        }
+
+
+        .score-description h3 {
+
+            font-size: 17px;
+
+            margin-bottom: 7px;
+        }
+
+
+        .score-description p {
+
+            color: #7f89a4;
+
+            font-size: 11px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =========================
+           SECTION GRID
+        ========================= */
+
+        .two-column {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 18px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .section {
+
+            overflow: hidden;
+
+            border-radius: 19px;
+
+            background:
+                rgba(255,255,255,0.055);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            box-shadow:
+                0 18px 50px
+                rgba(0,0,0,0.18);
+
+            backdrop-filter: blur(15px);
+        }
+
+
+        .section-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                17px 20px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.07);
+        }
+
+
+        .section-icon {
+
+            width: 33px;
+
+            height: 33px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background:
+                rgba(102,117,255,0.11);
+
+            font-size: 16px;
+        }
+
+
+        .section-header h2 {
+
+            font-size: 14px;
+        }
+
+
+        .section-body {
+
+            padding: 20px;
+        }
+
+
+        /* =========================
+           PERSONAL INFORMATION
+        ========================= */
+
+        .info-list {
+
+            display: grid;
+
+            gap: 12px;
+        }
+
+
+        .info-row {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 12px;
+
+            padding:
+                12px;
+
+            border-radius: 11px;
+
+            background:
+                rgba(255,255,255,0.035);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.045);
+        }
+
+
+        .info-row-icon {
+
+            width: 30px;
+
+            height: 30px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 8px;
+
+            background:
+                rgba(102,117,255,0.10);
+
+            font-size: 13px;
+        }
+
+
+        .info-label {
+
+            color: #69738e;
+
+            font-size: 9px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .info-value {
+
+            color: #d5d9e7;
+
+            font-size: 12px;
+
+            word-break: break-word;
+        }
+
+
+        /* =========================
+           SKILLS
+        ========================= */
+
+        .skill-group {
+
+            margin-bottom: 20px;
+        }
+
+
+        .skill-group:last-child {
+
+            margin-bottom: 0;
+        }
+
+
+        .skill-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            margin-bottom: 11px;
+
+            color: #aeb7cd;
+
+            font-size: 11px;
+
+            font-weight: 600;
+        }
+
+
+        .skill-list {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+        }
+
+
+        .skill {
+
+            padding:
+                7px 10px;
+
+            border-radius: 8px;
+
+            font-size: 10px;
+
+            font-weight: 600;
+        }
+
+
+        .matched {
+
+            color: #8eeab8;
+
+            background:
+                rgba(45,205,120,0.09);
+
+            border:
+                1px solid
+                rgba(45,205,120,0.14);
+        }
+
+
+        .missing {
+
+            color: #ff9ca8;
+
+            background:
+                rgba(255,80,100,0.07);
+
+            border:
+                1px solid
+                rgba(255,80,100,0.13);
+        }
+
+
+        .required {
+
+            color: #b4bdff;
+
+            background:
+                rgba(91,106,255,0.09);
+
+            border:
+                1px solid
+                rgba(91,106,255,0.14);
+        }
+
+
+        /* =========================
+           ATS BREAKDOWN
+        ========================= */
+
+        .breakdown {
+
+            display: grid;
+
+            gap: 15px;
+        }
+
+
+        .breakdown-row {
+
+            display: grid;
+
+            grid-template-columns:
+                130px 1fr 48px;
+
+            align-items: center;
+
+            gap: 12px;
+        }
+
+
+        .breakdown-name {
+
+            color: #a5aec4;
+
+            font-size: 11px;
+        }
+
+
+        .progress {
+
+            height: 7px;
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,0.07);
+        }
+
+
+        .progress-bar {
+
+            height: 100%;
+
+            border-radius: inherit;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #596aff,
+                    #8a4cdf
+                );
+        }
+
+
+        .breakdown-value {
+
+            text-align: right;
+
+            color: #d8dced;
+
+            font-size: 10px;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           TEXT CONTENT
+        ========================= */
+
+        .text-content {
+
+            color: #9da6bd;
+
+            font-size: 12px;
+
+            line-height: 1.8;
+
+            white-space: pre-wrap;
+
+            word-break: break-word;
+        }
+
+
+        .not-found {
+
+            color: #68728d;
+
+            font-style: italic;
+        }
+
+
+        /* =========================
+           KEYWORDS
+        ========================= */
+
+        .keywords {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+        }
+
+
+        .keyword {
+
+            padding:
+                6px 9px;
+
+            border-radius: 7px;
+
+            color: #aeb8ff;
+
+            font-size: 10px;
+
+            background:
+                rgba(91,106,255,0.09);
+
+            border:
+                1px solid
+                rgba(91,106,255,0.14);
+        }
+
+
+        /* =========================
+           SUGGESTIONS
+        ========================= */
+
+        .suggestions {
+
+            display: grid;
+
+            gap: 10px;
+        }
+
+
+        .suggestion {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 11px;
+
+            padding:
+                13px;
+
+            border-radius: 11px;
+
+            background:
+                rgba(255,255,255,0.035);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.055);
+        }
+
+
+        .suggestion-number {
+
+            width: 26px;
+
+            height: 26px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 8px;
+
+            color: #b8c0ff;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            background:
+                rgba(91,106,255,0.12);
+        }
+
+
+        .suggestion-text {
+
+            color: #aeb6c9;
+
+            font-size: 11px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =========================
+           FULL WIDTH
+        ========================= */
+
+        .full-width {
+
+            margin-bottom: 18px;
+        }
+
+
+        /* =========================
+           BOTTOM ACTIONS
+        ========================= */
+
+        .bottom-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            flex-wrap: wrap;
+
+            padding-top: 10px;
+        }
+
+
+        .bottom-actions .btn {
+
+            min-width: 150px;
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 30px;
+
+            color: #4f5871;
+
+            font-size: 10px;
+        }
+
+
+        /* =========================
+           TABLET
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .score-grid {
+
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+
+            .score-card:last-child {
+
+                grid-column:
+                    1 / -1;
+            }
+
+
+            .two-column {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .report-header {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .header-actions {
+
+                width: 100%;
+
+                justify-content: flex-start;
+            }
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+
+                padding:
+                    14px 4%;
+
+                flex-direction: column;
+
+                gap: 13px;
+            }
+
+
+            .logo {
+
+                justify-content: center;
+            }
+
+
+            .nav-links {
+
+                width: 100%;
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(3,1fr);
+
+                gap: 5px;
+            }
+
+
+            .nav-links a {
+
+                text-align: center;
+
+                font-size: 11px;
+
+                padding:
+                    8px 4px;
+            }
+
+
+            .container {
+
+                width: 92%;
+
+                padding:
+                    30px 0 50px;
+            }
+
+
+            .report-icon {
+
+                width: 52px;
+
+                height: 52px;
+
+                border-radius: 15px;
+
+                font-size: 24px;
+            }
+
+
+            .report-header h1 {
+
+                font-size: 25px;
+            }
+
+
+            .report-header p {
+
+                font-size: 11px;
+
+                line-height: 1.5;
+            }
+
+
+            .header-actions {
+
+                display: grid;
+
+                grid-template-columns:
+                    1fr 1fr;
+
+                width: 100%;
+            }
+
+
+            .btn {
+
+                padding:
+                    10px 8px;
+
+                font-size: 11px;
+            }
+
+
+            .file-bar {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .score-grid {
+
+                grid-template-columns:
+                    1fr;
+
+                gap: 11px;
+            }
+
+
+            .score-card:last-child {
+
+                grid-column:
+                    auto;
+            }
+
+
+            .score-card {
+
+                min-height: 175px;
+
+                padding: 19px;
+            }
+
+
+            .circle {
+
+                width: 90px;
+
+                height: 90px;
+            }
+
+
+            .circle::before {
+
+                width: 70px;
+
+                height: 70px;
+            }
+
+
+            .circle-value {
+
+                font-size: 19px;
+            }
+
+
+            .score-description h3 {
+
+                font-size: 15px;
+            }
+
+
+            .section {
+
+                border-radius: 17px;
+            }
+
+
+            .section-body {
+
+                padding: 16px;
+            }
+
+
+            .breakdown-row {
+
+                grid-template-columns:
+                    105px 1fr 42px;
+
+                gap: 8px;
+            }
+
+
+            .breakdown-name {
+
+                font-size: 10px;
+            }
+
+
+            .bottom-actions {
+
+                display: grid;
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .bottom-actions .btn {
+
+                width: 100%;
+            }
+
+        }
+
+
+        /* =========================
+           SMALL PHONE
+        ========================= */
+
+        @media (max-width: 390px) {
+
+            .nav-links {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+
+            .report-header h1 {
+
+                font-size: 23px;
+            }
+
+
+            .score-content {
+
+                gap: 14px;
+            }
+
+
+            .circle {
+
+                width: 80px;
+
+                height: 80px;
+            }
+
+
+            .circle::before {
+
+                width: 62px;
+
+                height: 62px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+
+    <a href="/dashboard"
+       class="logo">
+
+        <span class="logo-icon">
+            🤖
+        </span>
+
+        AI Resume Analyzer
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+        <a href="/upload">
+            Analyze
+        </a>
+
+        <a href="/history"
+           class="active">
+            History
+        </a>
+
+        <a href="/profile">
+            Profile
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+
+</nav>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="container">
+
+
+    <!-- =========================
+         REPORT HEADER
+    ========================= -->
+
+    <div class="report-header">
+
+
+        <div class="header-info">
+
+
+            <div class="report-icon">
+                📊
+            </div>
+
+
+            <div>
+
+                <h1>
+                    Resume Analysis Report
+                </h1>
+
+                <p>
+                    AI-powered insights and job compatibility analysis
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="header-actions">
+
+
+            <a
+                href="/history"
+                class="btn"
+            >
+                ← History
+            </a>
+
+
+            <a
+                href="/edit/{{ resume_id }}"
+                class="btn"
+            >
+                ✏ Edit
+            </a>
+
+
+            <a
+                href="/download/{{ resume_id }}"
+                class="btn primary-btn"
+            >
+                ⬇ Download
+            </a>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         FILE BAR
+    ========================= -->
+
+    <div class="file-bar">
+
+
+        <div class="file-info">
+
+
+            <div class="file-icon">
+                📄
+            </div>
+
+
+            <div>
+
+                <div class="file-name">
+
+                    {{ filename }}
+
+                </div>
+
+
+                <div class="file-label">
+
+                    Resume successfully analyzed
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="status">
+
+            ✓ Analysis Complete
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         SCORE CARDS
+    ========================= -->
+
+    <div class="score-grid">
+
+
+        <!-- ATS -->
+
+        <div class="score-card">
+
+
+            <div class="score-title">
+                ATS Compatibility
+            </div>
+
+
+            <div class="score-content">
+
+
+                <div
+                    class="circle"
+                    style="--score: {{ ats_score|default(0) }}"
+                >
+
+                    <span class="circle-value">
+
+                        {{ ats_score|default(0) }}%
+
+                    </span>
+
+                </div>
+
+
+                <div class="score-description">
+
+                    <h3>
+                        ATS Score
+                    </h3>
+
+                    <p>
+                        Measures how well your resume
+                        matches Applicant Tracking System
+                        requirements.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- MATCH -->
+
+        <div class="score-card">
+
+
+            <div class="score-title">
+                Job Compatibility
+            </div>
+
+
+            <div class="score-content">
+
+
+                <div
+                    class="circle"
+                    style="--score: {{ match_score|default(0) }}"
+                >
+
+                    <span class="circle-value">
+
+                        {{ match_score|default(0) }}%
+
+                    </span>
+
+                </div>
+
+
+                <div class="score-description">
+
+                    <h3>
+                        Job Match
+                    </h3>
+
+                    <p>
+                        Shows how closely your skills
+                        match the requirements of the
+                        selected job.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- QUALITY -->
+
+        <div class="score-card">
+
+
+            <div class="score-title">
+                Resume Quality
+            </div>
+
+
+            <div class="score-content">
+
+
+                <div
+                    class="circle"
+                    style="--score: {{ quality_score|default(0) }}"
+                >
+
+                    <span class="circle-value">
+
+                        {{ quality_score|default(0) }}%
+
+                    </span>
+
+                </div>
+
+
+                <div class="score-description">
+
+                    <h3>
+                        Quality Score
+                    </h3>
+
+                    <p>
+                        Evaluates the overall completeness
+                        and quality of your resume.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         PERSONAL + ATS
+    ========================= -->
+
+    <div class="two-column">
+
+
+        <!-- PERSONAL INFORMATION -->
+
+        <section class="section">
+
+
+            <div class="section-header">
+
+                <div class="section-icon">
+                    👤
+                </div>
+
+                <h2>
+                    Resume Information
+                </h2>
+
+            </div>
+
+
+            <div class="section-body">
+
+
+                <div class="info-list">
+
+
+                    <div class="info-row">
+
+                        <div class="info-row-icon">
+                            👨
+                        </div>
+
+                        <div>
+
+                            <div class="info-label">
+                                Name
+                            </div>
+
+                            <div class="info-value">
+                                {{ name|default("Not found") }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <div class="info-row-icon">
+                            ✉
+                        </div>
+
+                        <div>
+
+                            <div class="info-label">
+                                Email
+                            </div>
+
+                            <div class="info-value">
+                                {{ email|default("Not found") }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="info-row">
+
+                        <div class="info-row-icon">
+                            ☎
+                        </div>
+
+                        <div>
+
+                            <div class="info-label">
+                                Phone
+                            </div>
+
+                            <div class="info-value">
+                                {{ phone|default("Not found") }}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- ATS BREAKDOWN -->
+
+        <section class="section">
+
+
+            <div class="section-header">
+
+                <div class="section-icon">
+                    📈
+                </div>
+
+                <h2>
+                    ATS Score Breakdown
+                </h2>
+
+            </div>
+
+
+            <div class="section-body">
+
+
+                <div class="breakdown">
+
+
+                    <div class="breakdown-row">
+
+                        <span class="breakdown-name">
+                            Skills
+                        </span>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                style="width: {{ (skill_score|default(0) * 2)|round }}%;"
+                            ></div>
+
+                        </div>
+
+                        <span class="breakdown-value">
+                            {{ skill_score|default(0) }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="breakdown-row">
+
+                        <span class="breakdown-name">
+                            Keywords
+                        </span>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                style="width: {{ (keyword_score|default(0) * 5)|round }}%;"
+                            ></div>
+
+                        </div>
+
+                        <span class="breakdown-value">
+                            {{ keyword_score|default(0) }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="breakdown-row">
+
+                        <span class="breakdown-name">
+                            Education
+                        </span>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                style="width: {{ (education_score|default(0) * 6.67)|round }}%;"
+                            ></div>
+
+                        </div>
+
+                        <span class="breakdown-value">
+                            {{ education_score|default(0) }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="breakdown-row">
+
+                        <span class="breakdown-name">
+                            Experience
+                        </span>
+
+                        <div class="progress">
+
+                            <div
+                                class="progress-bar"
+                                style="width: {{ (experience_score|default(0) * 6.67)|round }}%;"
+                            ></div>
+
+                        </div>
+
+                        <span class="breakdown-value">
+                            {{ experience_score|default(0) }}
+                        </span>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         SKILLS
+    ========================= -->
+
+    <section class="section full-width">
+
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                🧠
+            </div>
+
+            <h2>
+                Skill Analysis
+            </h2>
+
+        </div>
+
+
+        <div class="section-body">
+
+
+            <!-- MATCHED -->
+
+            <div class="skill-group">
+
+
+                <div class="skill-title">
+                    🟢 Matched Skills
+                </div>
+
+
+                <div class="skill-list">
+
+
+                    {% if matched_skills %}
+
+                        {% for skill in matched_skills %}
+
+                            <span class="skill matched">
+
+                                ✓ {{ skill }}
+
+                            </span>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <span class="not-found">
+                            No matching skills found.
+                        </span>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- MISSING -->
+
+            <div class="skill-group">
+
+
+                <div class="skill-title">
+                    🔴 Missing Skills
+                </div>
+
+
+                <div class="skill-list">
+
+
+                    {% if missing_skills %}
+
+                        {% for skill in missing_skills %}
+
+                            <span class="skill missing">
+
+                                + {{ skill }}
+
+                            </span>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <span class="not-found">
+                            No missing skills detected.
+                        </span>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- REQUIRED -->
+
+            <div class="skill-group">
+
+
+                <div class="skill-title">
+                    🎯 Required Skills
+                </div>
+
+
+                <div class="skill-list">
+
+
+                    {% if required_skills %}
+
+                        {% for skill in required_skills %}
+
+                            <span class="skill required">
+
+                                {{ skill }}
+
+                            </span>
+
+                        {% endfor %}
+
+                    {% else %}
+
+                        <span class="not-found">
+                            No specific skills detected.
+                        </span>
+
+                    {% endif %}
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================
+         KEYWORDS
+    ========================= -->
+
+    <section class="section full-width">
+
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                🔑
+            </div>
+
+            <h2>
+                Matched Job Keywords
+            </h2>
+
+        </div>
+
+
+        <div class="section-body">
+
+
+            <div class="keywords">
+
+
+                {% if matched_keywords %}
+
+                    {% for keyword in matched_keywords %}
+
+                        <span class="keyword">
+
+                            {{ keyword }}
+
+                        </span>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <span class="not-found">
+                        No matching keywords found.
+                    </span>
+
+                {% endif %}
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================
+         EDUCATION + EXPERIENCE
+    ========================= -->
+
+    <div class="two-column">
+
+
+        <!-- EDUCATION -->
+
+        <section class="section">
+
+
+            <div class="section-header">
+
+                <div class="section-icon">
+                    🎓
+                </div>
+
+                <h2>
+                    Education
+                </h2>
+
+            </div>
+
+
+            <div class="section-body">
+
+
+                {% if education and education != "Not found" %}
+
+                    <div class="text-content">
+                        {{ education }}
+                    </div>
+
+                {% else %}
+
+                    <div class="text-content not-found">
+                        Education information was not detected.
+                    </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- EXPERIENCE -->
+
+        <section class="section">
+
+
+            <div class="section-header">
+
+                <div class="section-icon">
+                    💼
+                </div>
+
+                <h2>
+                    Experience
+                </h2>
+
+            </div>
+
+
+            <div class="section-body">
+
+
+                {% if experience and experience != "Not found" %}
+
+                    <div class="text-content">
+                        {{ experience }}
+                    </div>
+
+                {% else %}
+
+                    <div class="text-content not-found">
+                        Experience information was not detected.
+                    </div>
+
+                {% endif %}
+
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         PROJECTS
+    ========================= -->
+
+    <section class="section full-width">
+
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                🚀
+            </div>
+
+            <h2>
+                Projects
+            </h2>
+
+        </div>
+
+
+        <div class="section-body">
+
+
+            {% if projects and projects != "Not found" %}
+
+                <div class="text-content">
+                    {{ projects }}
+                </div>
+
+            {% else %}
+
+                <div class="text-content not-found">
+                    No project information was detected.
+                </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================
+         AI RECOMMENDATIONS
+    ========================= -->
+
+    <section class="section full-width">
+
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                🤖
+            </div>
+
+            <h2>
+                AI Recommendations
+            </h2>
+
+        </div>
+
+
+        <div class="section-body">
+
+
+            <div class="suggestions">
+
+
+                {% if suggestions %}
+
+
+                    {% for suggestion in suggestions %}
+
+
+                        <div class="suggestion">
+
+
+                            <div class="suggestion-number">
+
+                                {{ loop.index }}
+
+                            </div>
+
+
+                            <div class="suggestion-text">
+
+                                {{ suggestion }}
+
+                            </div>
+
+
+                        </div>
+
+
+                    {% endfor %}
+
+
+                {% else %}
+
+
+                    <div class="suggestion">
+
+
+                        <div class="suggestion-number">
+                            ✓
+                        </div>
+
+
+                        <div class="suggestion-text">
+
+                            Your resume looks well aligned
+                            with the provided job description.
+
+                        </div>
+
+
+                    </div>
+
+
+                {% endif %}
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================
+         JOB DESCRIPTION
+    ========================= -->
+
+    <section class="section full-width">
+
+
+        <div class="section-header">
+
+            <div class="section-icon">
+                💼
+            </div>
+
+            <h2>
+                Analyzed Job Description
+            </h2>
+
+        </div>
+
+
+        <div class="section-body">
+
+
+            {% if job_description %}
+
+                <div class="text-content">
+                    {{ job_description }}
+                </div>
+
+            {% else %}
+
+                <div class="text-content not-found">
+                    Job description was not available.
+                </div>
+
+            {% endif %}
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================
+         BOTTOM ACTIONS
+    ========================= -->
+
+    <div class="bottom-actions">
+
+
+        <a
+            href="/history"
+            class="btn"
+        >
+            ← Back to History
+        </a>
+
+
+        <a
+            href="/edit/{{ resume_id }}"
+            class="btn"
+        >
+            ✏ Edit & Re-analyze
+        </a>
+
+
+        <a
+            href="/download/{{ resume_id }}"
+            class="btn primary-btn"
+        >
+            ⬇ Download Analysis
+        </a>
+
+
+    </div>
+
+
+
+    <div class="footer">
+
+        AI Resume Analyzer • Intelligent Career Assistant
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

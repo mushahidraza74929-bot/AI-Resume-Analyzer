@@ -1,0 +1,1581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Analysis History | AI Resume Analyzer</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            min-height: 100vh;
+
+            color: #ffffff;
+
+            background:
+                radial-gradient(
+                    circle at 8% 8%,
+                    rgba(91,105,255,0.30),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 92% 90%,
+                    rgba(147,65,218,0.28),
+                    transparent 32%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #070a16,
+                    #0d1022 50%,
+                    #080a16
+                );
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+
+            min-height: 72px;
+
+            padding: 0 5%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            background:
+                rgba(7,10,22,0.88);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            backdrop-filter: blur(20px);
+        }
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        .logo-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6675ff,
+                    #914be0
+                );
+
+            box-shadow:
+                0 8px 25px
+                rgba(102,117,255,0.25);
+        }
+
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+        }
+
+
+        .nav-links a {
+
+            color: #aeb7d1;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            padding: 9px 13px;
+
+            border-radius: 9px;
+
+            transition: 0.25s;
+        }
+
+
+        .nav-links a:hover {
+
+            color: white;
+
+            background:
+                rgba(255,255,255,0.06);
+        }
+
+
+        .nav-links .active {
+
+            color: white;
+
+            background:
+                rgba(102,117,255,0.16);
+        }
+
+
+        .logout {
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+
+            width: 90%;
+
+            max-width: 1180px;
+
+            margin: auto;
+
+            padding:
+                50px 0 70px;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        .page-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 25px;
+
+            margin-bottom: 32px;
+        }
+
+
+        .header-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+        }
+
+
+        .header-icon {
+
+            width: 62px;
+
+            height: 62px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 18px;
+
+            font-size: 29px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(101,117,255,0.25),
+                    rgba(145,72,220,0.25)
+                );
+
+            border:
+                1px solid
+                rgba(124,138,255,0.20);
+
+            box-shadow:
+                0 15px 35px
+                rgba(82,96,220,0.12);
+        }
+
+
+        .page-header h1 {
+
+            font-size: 32px;
+
+            letter-spacing: -0.8px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .page-header p {
+
+            color: #858fa9;
+
+            font-size: 13px;
+        }
+
+
+        .new-analysis {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            padding: 13px 18px;
+
+            border-radius: 11px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #596aff,
+                    #8748dc
+                );
+
+            box-shadow:
+                0 12px 30px
+                rgba(89,106,255,0.23);
+
+            transition: 0.25s;
+        }
+
+
+        .new-analysis:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 17px 38px
+                rgba(89,106,255,0.32);
+        }
+
+
+        /* =========================
+           SUMMARY
+        ========================= */
+
+        .summary-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3,1fr);
+
+            gap: 15px;
+
+            margin-bottom: 28px;
+        }
+
+
+        .summary-card {
+
+            position: relative;
+
+            overflow: hidden;
+
+            min-height: 125px;
+
+            padding: 20px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.075),
+                    rgba(255,255,255,0.035)
+                );
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            box-shadow:
+                0 15px 40px
+                rgba(0,0,0,0.15);
+        }
+
+
+        .summary-card::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 100px;
+
+            height: 100px;
+
+            right: -45px;
+
+            bottom: -50px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(102,117,255,0.13);
+        }
+
+
+        .summary-top {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 15px;
+        }
+
+
+        .summary-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 11px;
+
+            font-size: 18px;
+
+            background:
+                rgba(102,117,255,0.12);
+
+            border:
+                1px solid
+                rgba(102,117,255,0.14);
+        }
+
+
+        .summary-label {
+
+            color: #7d87a3;
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .summary-value {
+
+            font-size: 28px;
+
+            font-weight: 700;
+        }
+
+
+        /* =========================
+           HISTORY PANEL
+        ========================= */
+
+        .history-panel {
+
+            overflow: hidden;
+
+            border-radius: 22px;
+
+            background:
+                rgba(255,255,255,0.055);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            box-shadow:
+                0 25px 70px
+                rgba(0,0,0,0.30);
+
+            backdrop-filter: blur(18px);
+        }
+
+
+        .panel-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                21px 24px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.07);
+        }
+
+
+        .panel-header h2 {
+
+            font-size: 16px;
+        }
+
+
+        .record-count {
+
+            color: #717b96;
+
+            font-size: 11px;
+        }
+
+
+        /* =========================
+           TABLE
+        ========================= */
+
+        .table-wrapper {
+
+            width: 100%;
+
+            overflow-x: auto;
+        }
+
+
+        table {
+
+            width: 100%;
+
+            min-width: 780px;
+
+            border-collapse: collapse;
+        }
+
+
+        th {
+
+            padding:
+                15px 20px;
+
+            text-align: left;
+
+            color: #69738e;
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            letter-spacing: 0.7px;
+
+            background:
+                rgba(0,0,0,0.12);
+        }
+
+
+        td {
+
+            padding:
+                17px 20px;
+
+            border-top:
+                1px solid
+                rgba(255,255,255,0.055);
+
+            color: #c7cde0;
+
+            font-size: 12px;
+
+            vertical-align: middle;
+        }
+
+
+        tbody tr {
+
+            transition: 0.2s;
+        }
+
+
+        tbody tr:hover {
+
+            background:
+                rgba(255,255,255,0.035);
+        }
+
+
+        /* =========================
+           RESUME
+        ========================= */
+
+        .resume-info {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            max-width: 280px;
+        }
+
+
+        .resume-icon {
+
+            flex-shrink: 0;
+
+            width: 40px;
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 11px;
+
+            font-size: 19px;
+
+            background:
+                rgba(102,117,255,0.12);
+
+            border:
+                1px solid
+                rgba(102,117,255,0.14);
+        }
+
+
+        .resume-name {
+
+            max-width: 220px;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+
+            color: #e8ebf5;
+
+            font-weight: 600;
+        }
+
+
+        .resume-subtitle {
+
+            margin-top: 4px;
+
+            color: #68728c;
+
+            font-size: 10px;
+        }
+
+
+        /* =========================
+           SCORE
+        ========================= */
+
+        .score {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            min-width: 65px;
+
+            padding: 7px 10px;
+
+            border-radius: 9px;
+
+            color: #b5bdff;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            background:
+                rgba(91,106,255,0.12);
+
+            border:
+                1px solid
+                rgba(91,106,255,0.18);
+        }
+
+
+        /* =========================
+           DATE
+        ========================= */
+
+        .date {
+
+            color: #8a93aa;
+
+            font-size: 11px;
+
+            white-space: nowrap;
+        }
+
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+        }
+
+
+        .action-btn {
+
+            width: 36px;
+
+            height: 36px;
+
+            display: inline-flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 9px;
+
+            color: #abb4ca;
+
+            text-decoration: none;
+
+            background:
+                rgba(255,255,255,0.045);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.07);
+
+            transition: 0.2s;
+        }
+
+
+        .action-btn:hover {
+
+            color: white;
+
+            background:
+                rgba(102,117,255,0.16);
+
+            border-color:
+                rgba(102,117,255,0.24);
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        .delete-btn {
+
+            width: 36px;
+
+            height: 36px;
+
+            border-radius: 9px;
+
+            color: #d98291;
+
+            background:
+                rgba(255,80,100,0.045);
+
+            border:
+                1px solid
+                rgba(255,80,100,0.10);
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+
+        .delete-btn:hover {
+
+            color: #ffabb5;
+
+            background:
+                rgba(255,80,100,0.12);
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        /* =========================
+           EMPTY STATE
+        ========================= */
+
+        .empty-state {
+
+            text-align: center;
+
+            padding:
+                75px 25px;
+        }
+
+
+        .empty-icon {
+
+            width: 76px;
+
+            height: 76px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            margin:
+                0 auto 18px;
+
+            border-radius: 21px;
+
+            font-size: 32px;
+
+            background:
+                rgba(102,117,255,0.10);
+
+            border:
+                1px solid
+                rgba(102,117,255,0.15);
+        }
+
+
+        .empty-state h3 {
+
+            font-size: 18px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .empty-state p {
+
+            max-width: 420px;
+
+            margin: auto;
+
+            color: #737d98;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+        }
+
+
+        .empty-action {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            padding: 11px 18px;
+
+            border-radius: 10px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: 600;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #596aff,
+                    #8748dc
+                );
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 28px;
+
+            color: #4e5770;
+
+            font-size: 10px;
+        }
+
+
+        /* =========================
+           TABLET
+        ========================= */
+
+        @media (max-width: 850px) {
+
+            .page-header {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .summary-grid {
+
+                grid-template-columns:
+                    1fr 1fr;
+            }
+
+
+            .new-analysis {
+
+                width: 100%;
+
+                justify-content: center;
+            }
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+
+                padding:
+                    14px 4%;
+
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 13px;
+            }
+
+
+            .logo {
+
+                justify-content: center;
+            }
+
+
+            .nav-links {
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(3,1fr);
+
+                gap: 5px;
+            }
+
+
+            .nav-links a {
+
+                text-align: center;
+
+                font-size: 11px;
+
+                padding: 8px 4px;
+            }
+
+
+            .container {
+
+                width: 92%;
+
+                padding:
+                    35px 0 50px;
+            }
+
+
+            .header-left {
+
+                align-items: flex-start;
+            }
+
+
+            .header-icon {
+
+                width: 52px;
+
+                height: 52px;
+
+                font-size: 24px;
+
+                border-radius: 15px;
+            }
+
+
+            .page-header h1 {
+
+                font-size: 26px;
+            }
+
+
+            .page-header p {
+
+                font-size: 11px;
+            }
+
+
+            .summary-grid {
+
+                grid-template-columns: 1fr;
+
+                gap: 9px;
+            }
+
+
+            .summary-card {
+
+                min-height: 105px;
+
+                padding: 17px;
+            }
+
+
+            .history-panel {
+
+                border-radius: 18px;
+            }
+
+
+            .panel-header {
+
+                padding:
+                    17px;
+            }
+
+
+            table {
+
+                min-width: 780px;
+            }
+
+        }
+
+
+        /* =========================
+           SMALL PHONE
+        ========================= */
+
+        @media (max-width: 390px) {
+
+            .nav-links {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+
+            .page-header h1 {
+
+                font-size: 23px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+
+    <a href="/dashboard"
+       class="logo">
+
+        <span class="logo-icon">
+            🤖
+        </span>
+
+        AI Resume Analyzer
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+        <a href="/upload">
+            Analyze
+        </a>
+
+        <a href="/history"
+           class="active">
+            History
+        </a>
+
+        <a href="/profile">
+            Profile
+        </a>
+
+        <a href="/logout"
+           class="logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="container">
+
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+
+        <div class="header-left">
+
+
+            <div class="header-icon">
+                🕘
+            </div>
+
+
+            <div>
+
+                <h1>
+                    Analysis History
+                </h1>
+
+                <p>
+                    Review your previous resume analyses and results.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <a href="/upload"
+           class="new-analysis">
+
+            ＋ Analyze New Resume
+
+        </a>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         SUMMARY
+    ========================= -->
+
+    <div class="summary-grid">
+
+
+        <div class="summary-card">
+
+            <div class="summary-top">
+
+                <div class="summary-icon">
+                    📄
+                </div>
+
+                <span class="summary-label">
+                    RESUME ANALYSES
+                </span>
+
+            </div>
+
+
+            <div class="summary-value">
+
+                {{ resumes|length }}
+
+            </div>
+
+        </div>
+
+
+
+        <div class="summary-card">
+
+            <div class="summary-top">
+
+                <div class="summary-icon">
+                    🎯
+                </div>
+
+                <span class="summary-label">
+                    LATEST ATS SCORE
+                </span>
+
+            </div>
+
+
+            <div class="summary-value">
+
+                {% if resumes %}
+
+                    {{ resumes[0].ats_score|default(0) }}%
+
+                {% else %}
+
+                    0%
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+
+        <div class="summary-card">
+
+            <div class="summary-top">
+
+                <div class="summary-icon">
+                    ⭐
+                </div>
+
+                <span class="summary-label">
+                    LATEST JOB MATCH
+                </span>
+
+            </div>
+
+
+            <div class="summary-value">
+
+                {% if resumes %}
+
+                    {{ resumes[0].match_score|default(0) }}%
+
+                {% else %}
+
+                    0%
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         HISTORY
+    ========================= -->
+
+    <section class="history-panel">
+
+
+        <div class="panel-header">
+
+            <h2>
+                Your Resume Analyses
+            </h2>
+
+            <span class="record-count">
+
+                {{ resumes|length }} record(s)
+
+            </span>
+
+        </div>
+
+
+
+        {% if resumes %}
+
+
+        <div class="table-wrapper">
+
+
+            <table>
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            RESUME
+                        </th>
+
+                        <th>
+                            ATS SCORE
+                        </th>
+
+                        <th>
+                            JOB MATCH
+                        </th>
+
+                        <th>
+                            DATE
+                        </th>
+
+                        <th>
+                            ACTIONS
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                {% for resume in resumes %}
+
+
+                    <tr>
+
+
+                        <!-- =========================
+                             RESUME
+                        ========================= -->
+
+                        <td>
+
+                            <div class="resume-info">
+
+
+                                <div class="resume-icon">
+                                    📄
+                                </div>
+
+
+                                <div>
+
+                                    <div class="resume-name">
+
+                                        {{ resume.filename }}
+
+                                    </div>
+
+
+                                    <div class="resume-subtitle">
+
+                                        Resume analysis
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+
+                        </td>
+
+
+
+                        <!-- =========================
+                             ATS
+                        ========================= -->
+
+                        <td>
+
+                            <span class="score">
+
+                                {{ resume.ats_score|default(0) }}%
+
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- =========================
+                             MATCH
+                        ========================= -->
+
+                        <td>
+
+                            <span class="score">
+
+                                {{ resume.match_score|default(0) }}%
+
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- =========================
+                             DATE
+                        ========================= -->
+
+                        <td>
+
+                            <span class="date">
+
+                                {{ resume.created_at }}
+
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- =========================
+                             ACTIONS
+                        ========================= -->
+
+                        <td>
+
+
+                            <div class="actions">
+
+
+                                <!-- VIEW REPORT -->
+
+                                <a
+                                    href="/report/{{ resume.id }}"
+                                    class="action-btn"
+                                    title="View Report"
+                                >
+
+                                    👁
+
+                                </a>
+
+
+
+                                <!-- EDIT -->
+
+                                <a
+                                    href="/edit/{{ resume.id }}"
+                                    class="action-btn"
+                                    title="Edit Resume"
+                                >
+
+                                    ✏
+
+                                </a>
+
+
+
+                                <!-- DELETE -->
+
+                                <form
+                                    action="/delete/{{ resume.id }}"
+                                    method="POST"
+                                    style="display:inline;"
+                                    onsubmit="return confirm('Are you sure you want to delete this resume analysis?');"
+                                >
+
+
+                                    <input
+                                        type="hidden"
+                                        name="csrf_token"
+                                        value="{{ csrf_token() }}"
+                                    >
+
+
+                                    <button
+                                        type="submit"
+                                        class="delete-btn"
+                                        title="Delete Resume"
+                                    >
+
+                                        🗑
+
+                                    </button>
+
+
+                                </form>
+
+
+                            </div>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                {% endfor %}
+
+
+                </tbody>
+
+
+            </table>
+
+
+        </div>
+
+
+        {% else %}
+
+
+        <!-- =========================
+             EMPTY
+        ========================= -->
+
+        <div class="empty-state">
+
+
+            <div class="empty-icon">
+                📭
+            </div>
+
+
+            <h3>
+                No analyses yet
+            </h3>
+
+
+            <p>
+
+                You haven't analyzed any resumes yet.
+                Upload your first resume and compare it
+                with a job description to see your results here.
+
+            </p>
+
+
+            <a
+                href="/upload"
+                class="empty-action"
+            >
+
+                🚀 Analyze Your First Resume
+
+            </a>
+
+
+        </div>
+
+
+        {% endif %}
+
+
+    </section>
+
+
+
+    <div class="footer">
+
+        AI Resume Analyzer • Your Intelligent Career Assistant
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>

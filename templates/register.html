@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | AI Resume Analyzer</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 25px;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(91,105,255,0.32),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 90% 90%,
+                    rgba(145,65,220,0.30),
+                    transparent 32%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #070a17,
+                    #0d1022 50%,
+                    #080a16
+                );
+        }
+
+
+        /* =========================
+           CONTAINER
+        ========================= */
+
+        .auth-container {
+
+            width: 100%;
+
+            max-width: 980px;
+
+            min-height: 650px;
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            overflow: hidden;
+
+            border-radius: 28px;
+
+            background:
+                rgba(255,255,255,0.055);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            box-shadow:
+                0 30px 90px
+                rgba(0,0,0,0.40);
+
+            backdrop-filter: blur(20px);
+        }
+
+
+        /* =========================
+           LEFT
+        ========================= */
+
+        .welcome-panel {
+
+            position: relative;
+
+            overflow: hidden;
+
+            padding: 50px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(91,105,255,0.17),
+                    rgba(130,65,210,0.08)
+                );
+        }
+
+
+        .welcome-panel::before {
+
+            content: "";
+
+            position: absolute;
+
+            width: 300px;
+
+            height: 300px;
+
+            right: -130px;
+
+            top: -130px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(102,117,255,0.13);
+        }
+
+
+        .welcome-panel::after {
+
+            content: "";
+
+            position: absolute;
+
+            width: 220px;
+
+            height: 220px;
+
+            left: -110px;
+
+            bottom: -110px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(145,72,220,0.12);
+        }
+
+
+        .brand {
+
+            position: relative;
+
+            z-index: 2;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            margin-bottom: 40px;
+        }
+
+
+        .brand-icon {
+
+            width: 46px;
+
+            height: 46px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 13px;
+
+            font-size: 23px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6675ff,
+                    #9148df
+                );
+
+            box-shadow:
+                0 12px 30px
+                rgba(102,117,255,0.30);
+        }
+
+
+        .brand-name {
+
+            font-size: 19px;
+
+            font-weight: 700;
+        }
+
+
+        .welcome-content {
+
+            position: relative;
+
+            z-index: 2;
+        }
+
+
+        .welcome-content h1 {
+
+            max-width: 390px;
+
+            font-size: 38px;
+
+            line-height: 1.13;
+
+            letter-spacing: -1px;
+
+            margin-bottom: 18px;
+        }
+
+
+        .welcome-content h1 span {
+
+            color: #8390ff;
+        }
+
+
+        .welcome-content p {
+
+            max-width: 390px;
+
+            color: #8e98b1;
+
+            font-size: 13px;
+
+            line-height: 1.8;
+
+            margin-bottom: 28px;
+        }
+
+
+        .benefits {
+
+            display: grid;
+
+            gap: 10px;
+        }
+
+
+        .benefit {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: #b3bbd0;
+
+            font-size: 11px;
+        }
+
+
+        .benefit-icon {
+
+            width: 28px;
+
+            height: 28px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 8px;
+
+            background:
+                rgba(102,117,255,0.11);
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-panel {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 42px;
+        }
+
+
+        .form-box {
+
+            width: 100%;
+
+            max-width: 370px;
+        }
+
+
+        .form-header {
+
+            margin-bottom: 24px;
+        }
+
+
+        .form-header h2 {
+
+            font-size: 27px;
+
+            margin-bottom: 8px;
+        }
+
+
+        .form-header p {
+
+            color: #747e98;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           MESSAGES
+        ========================= */
+
+        .message {
+
+            padding: 11px 13px;
+
+            margin-bottom: 15px;
+
+            border-radius: 10px;
+
+            font-size: 11px;
+
+            line-height: 1.5;
+
+            background:
+                rgba(255,255,255,0.05);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+        }
+
+
+        .message.success {
+
+            color: #86e8b1;
+
+            background:
+                rgba(50,205,120,0.07);
+
+            border-color:
+                rgba(50,205,120,0.12);
+        }
+
+
+        .message.error {
+
+            color: #ff9ca8;
+
+            background:
+                rgba(255,70,90,0.07);
+
+            border-color:
+                rgba(255,70,90,0.12);
+        }
+
+
+        /* =========================
+           FORM GROUP
+        ========================= */
+
+        .form-group {
+
+            margin-bottom: 14px;
+        }
+
+
+        label {
+
+            display: block;
+
+            color: #d6dbea;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            margin-bottom: 7px;
+        }
+
+
+        .input-wrapper {
+
+            position: relative;
+        }
+
+
+        .input-icon {
+
+            position: absolute;
+
+            left: 14px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            color: #68728d;
+
+            font-size: 14px;
+
+            pointer-events: none;
+        }
+
+
+        input {
+
+            width: 100%;
+
+            height: 45px;
+
+            padding:
+                0 43px
+                0 40px;
+
+            outline: none;
+
+            border-radius: 11px;
+
+            color: white;
+
+            background:
+                rgba(0,0,0,0.20);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.09);
+
+            font-size: 12px;
+
+            transition: 0.25s;
+        }
+
+
+        input::placeholder {
+
+            color: #5f6982;
+        }
+
+
+        input:focus {
+
+            border-color:
+                #6675ff;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(102,117,255,0.11);
+        }
+
+
+        .toggle {
+
+            position: absolute;
+
+            right: 11px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            color: #69738c;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            padding: 5px;
+        }
+
+
+        .toggle:hover {
+
+            color: white;
+        }
+
+
+        /* =========================
+           PASSWORD HELP
+        ========================= */
+
+        .password-help {
+
+            color: #5e6880;
+
+            font-size: 9px;
+
+            margin-top: 5px;
+        }
+
+
+        /* =========================
+           REGISTER BUTTON
+        ========================= */
+
+        .register-btn {
+
+            width: 100%;
+
+            height: 48px;
+
+            margin-top: 8px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            color: white;
+
+            font-size: 12px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #596aff,
+                    #8748dc
+                );
+
+            box-shadow:
+                0 12px 30px
+                rgba(89,106,255,0.22);
+
+            transition: 0.25s;
+        }
+
+
+        .register-btn:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 17px 38px
+                rgba(89,106,255,0.32);
+        }
+
+
+        /* =========================
+           LOGIN LINK
+        ========================= */
+
+        .login-link {
+
+            text-align: center;
+
+            margin-top: 19px;
+
+            color: #68728b;
+
+            font-size: 11px;
+        }
+
+
+        .login-link a {
+
+            color: #8a96ff;
+
+            text-decoration: none;
+
+            font-weight: 700;
+        }
+
+
+        .login-link a:hover {
+
+            color: white;
+
+            text-decoration: underline;
+        }
+
+
+        .security {
+
+            text-align: center;
+
+            margin-top: 22px;
+
+            color: #4f5870;
+
+            font-size: 9px;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 750px) {
+
+            body {
+
+                padding: 15px;
+            }
+
+
+            .auth-container {
+
+                max-width: 480px;
+
+                min-height: auto;
+
+                grid-template-columns:
+                    1fr;
+
+                border-radius: 22px;
+            }
+
+
+            .welcome-panel {
+
+                display: none;
+            }
+
+
+            .form-panel {
+
+                padding:
+                    35px 25px;
+            }
+
+
+            .form-box {
+
+                max-width: 400px;
+            }
+
+        }
+
+
+        @media (max-width: 400px) {
+
+            .form-panel {
+
+                padding:
+                    28px 19px;
+            }
+
+
+            .form-header h2 {
+
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="auth-container">
+
+
+    <!-- =========================
+         WELCOME PANEL
+    ========================= -->
+
+    <section class="welcome-panel">
+
+
+        <div class="brand">
+
+            <div class="brand-icon">
+                🤖
+            </div>
+
+            <div class="brand-name">
+                AI Resume Analyzer
+            </div>
+
+        </div>
+
+
+        <div class="welcome-content">
+
+
+            <h1>
+                Build your
+                <span>career smarter.</span>
+            </h1>
+
+
+            <p>
+                Create your account and start analyzing your
+                resume with intelligent ATS scoring, job matching
+                and personalized recommendations.
+            </p>
+
+
+            <div class="benefits">
+
+
+                <div class="benefit">
+
+                    <span class="benefit-icon">
+                        📄
+                    </span>
+
+                    Analyze PDF and DOCX resumes
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <span class="benefit-icon">
+                        🎯
+                    </span>
+
+                    Match resumes with jobs
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <span class="benefit-icon">
+                        ⭐
+                    </span>
+
+                    Improve resume quality
+
+                </div>
+
+
+                <div class="benefit">
+
+                    <span class="benefit-icon">
+                        📊
+                    </span>
+
+                    Track your analysis history
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =========================
+         REGISTER FORM
+    ========================= -->
+
+    <section class="form-panel">
+
+
+        <div class="form-box">
+
+
+            <div class="form-header">
+
+                <h2>
+                    Create account
+                </h2>
+
+                <p>
+                    Join AI Resume Analyzer and improve your resume.
+                </p>
+
+            </div>
+
+
+            <!-- FLASH MESSAGES -->
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+
+                {% if messages %}
+
+                    {% for category, message in messages %}
+
+                        <div class="message {{ category }}">
+
+                            {{ message }}
+
+                        </div>
+
+                    {% endfor %}
+
+                {% endif %}
+
+            {% endwith %}
+
+
+
+            <form
+                method="POST"
+                action="/register"
+            >
+
+
+                <!-- CSRF -->
+
+                <input
+                    type="hidden"
+                    name="csrf_token"
+                    value="{{ csrf_token() }}"
+                >
+
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label>
+                        Full Name
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            👤
+                        </span>
+
+
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Enter your full name"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label>
+                        Email Address
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ✉
+                        </span>
+
+
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label>
+                        Password
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            🔑
+                        </span>
+
+
+                        <input
+                            type="password"
+                            id="registerPassword"
+                            name="password"
+                            placeholder="Create a password"
+                            minlength="6"
+                            required
+                        >
+
+
+                        <button
+                            type="button"
+                            class="toggle"
+                            onclick="togglePassword(
+                                'registerPassword',
+                                this
+                            )"
+                        >
+                            👁
+                        </button>
+
+                    </div>
+
+
+                    <div class="password-help">
+
+                        Minimum 6 characters
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CONFIRM PASSWORD -->
+
+                <div class="form-group">
+
+                    <label>
+                        Confirm Password
+                    </label>
+
+
+                    <div class="input-wrapper">
+
+                        <span class="input-icon">
+                            ✓
+                        </span>
+
+
+                        <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirm_password"
+                            placeholder="Confirm your password"
+                            minlength="6"
+                            required
+                        >
+
+
+                        <button
+                            type="button"
+                            class="toggle"
+                            onclick="togglePassword(
+                                'confirmPassword',
+                                this
+                            )"
+                        >
+                            👁
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+
+                <button
+                    type="submit"
+                    class="register-btn"
+                >
+                    🚀 Create Account
+                </button>
+
+
+            </form>
+
+
+            <div class="login-link">
+
+                Already have an account?
+
+                <a href="/login">
+                    Sign in
+                </a>
+
+            </div>
+
+
+            <div class="security">
+
+                🔒 Your account credentials are securely protected
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</div>
+
+
+
+<script>
+
+    function togglePassword(
+        inputId,
+        button
+    ) {
+
+        const input =
+            document.getElementById(inputId);
+
+
+        if (input.type === "password") {
+
+            input.type = "text";
+
+            button.textContent = "🙈";
+
+        } else {
+
+            input.type = "password";
+
+            button.textContent = "👁";
+
+        }
+
+    }
+
+</script>
+
+
+</body>
+
+</html>

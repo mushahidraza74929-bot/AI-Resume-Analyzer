@@ -1,0 +1,1618 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Resume | AI Resume Analyzer</title>
+
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            min-height: 100vh;
+
+            color: #ffffff;
+
+            background:
+                radial-gradient(
+                    circle at 5% 5%,
+                    rgba(91,105,255,0.30),
+                    transparent 30%
+                ),
+
+                radial-gradient(
+                    circle at 95% 90%,
+                    rgba(145,65,220,0.28),
+                    transparent 32%
+                ),
+
+                linear-gradient(
+                    135deg,
+                    #070a17,
+                    #0d1022 50%,
+                    #080a16
+                );
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+
+            min-height: 72px;
+
+            padding:
+                0 5%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+
+            background:
+                rgba(7,10,22,0.88);
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            backdrop-filter: blur(20px);
+        }
+
+
+        .logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 20px;
+
+            font-weight: 700;
+
+            white-space: nowrap;
+        }
+
+
+        .logo-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 11px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #6675ff,
+                    #9148df
+                );
+
+            box-shadow:
+                0 8px 25px
+                rgba(102,117,255,0.25);
+        }
+
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+        }
+
+
+        .nav-links a {
+
+            color: #aeb7d1;
+
+            text-decoration: none;
+
+            font-size: 13px;
+
+            padding:
+                9px 13px;
+
+            border-radius: 9px;
+
+            transition: 0.25s;
+        }
+
+
+        .nav-links a:hover {
+
+            color: white;
+
+            background:
+                rgba(255,255,255,0.06);
+        }
+
+
+        .active {
+
+            color: white !important;
+
+            background:
+                rgba(102,117,255,0.15);
+        }
+
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+
+            width: 90%;
+
+            max-width: 1120px;
+
+            margin: auto;
+
+            padding:
+                45px 0 70px;
+        }
+
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 25px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .header-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+        }
+
+
+        .header-icon {
+
+            width: 62px;
+
+            height: 62px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 18px;
+
+            font-size: 29px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(102,117,255,0.25),
+                    rgba(145,72,220,0.25)
+                );
+
+            border:
+                1px solid
+                rgba(120,135,255,0.20);
+        }
+
+
+        .page-header h1 {
+
+            font-size: 30px;
+
+            letter-spacing: -0.7px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .page-header p {
+
+            color: #858fa9;
+
+            font-size: 12px;
+        }
+
+
+        .back-btn {
+
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            padding:
+                11px 16px;
+
+            border-radius: 10px;
+
+            color: #d5daea;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            background:
+                rgba(255,255,255,0.05);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            transition: 0.25s;
+        }
+
+
+        .back-btn:hover {
+
+            background:
+                rgba(255,255,255,0.09);
+
+            transform:
+                translateY(-2px);
+        }
+
+
+        /* =========================
+           FILE CARD
+        ========================= */
+
+        .file-card {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding:
+                17px 20px;
+
+            margin-bottom: 18px;
+
+            border-radius: 16px;
+
+            background:
+                rgba(255,255,255,0.055);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            box-shadow:
+                0 15px 40px
+                rgba(0,0,0,0.15);
+        }
+
+
+        .file-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            min-width: 0;
+        }
+
+
+        .file-icon {
+
+            width: 43px;
+
+            height: 43px;
+
+            flex-shrink: 0;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 11px;
+
+            font-size: 20px;
+
+            background:
+                rgba(102,117,255,0.12);
+        }
+
+
+        .file-name {
+
+            color: #e3e7f2;
+
+            font-size: 13px;
+
+            font-weight: 700;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+            white-space: nowrap;
+        }
+
+
+        .file-label {
+
+            color: #68728d;
+
+            font-size: 10px;
+
+            margin-top: 4px;
+        }
+
+
+        .scores {
+
+            display: flex;
+
+            gap: 8px;
+        }
+
+
+        .score {
+
+            padding:
+                7px 11px;
+
+            border-radius: 9px;
+
+            font-size: 10px;
+
+            font-weight: 700;
+
+            color: #b7c0ff;
+
+            background:
+                rgba(91,106,255,0.10);
+
+            border:
+                1px solid
+                rgba(91,106,255,0.15);
+        }
+
+
+        /* =========================
+           GRID
+        ========================= */
+
+        .main-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                0.9fr 1.1fr;
+
+            gap: 18px;
+
+            align-items: start;
+        }
+
+
+        /* =========================
+           CARD
+        ========================= */
+
+        .card {
+
+            overflow: hidden;
+
+            border-radius: 20px;
+
+            background:
+                rgba(255,255,255,0.055);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            box-shadow:
+                0 20px 55px
+                rgba(0,0,0,0.20);
+
+            backdrop-filter: blur(16px);
+        }
+
+
+        .card-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                18px 20px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.07);
+        }
+
+
+        .card-header-icon {
+
+            width: 34px;
+
+            height: 34px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 9px;
+
+            background:
+                rgba(102,117,255,0.11);
+
+            font-size: 16px;
+        }
+
+
+        .card-header h2 {
+
+            font-size: 14px;
+        }
+
+
+        .card-body {
+
+            padding: 20px;
+        }
+
+
+        /* =========================
+           INFORMATION
+        ========================= */
+
+        .info-list {
+
+            display: grid;
+
+            gap: 10px;
+        }
+
+
+        .info-item {
+
+            padding:
+                13px;
+
+            border-radius: 11px;
+
+            background:
+                rgba(255,255,255,0.035);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.05);
+        }
+
+
+        .info-label {
+
+            color: #68728c;
+
+            font-size: 9px;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            margin-bottom: 5px;
+        }
+
+
+        .info-value {
+
+            color: #d5d9e6;
+
+            font-size: 12px;
+
+            word-break: break-word;
+
+            line-height: 1.5;
+        }
+
+
+        /* =========================
+           SKILLS
+        ========================= */
+
+        .skills {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            gap: 7px;
+        }
+
+
+        .skill {
+
+            padding:
+                7px 10px;
+
+            border-radius: 8px;
+
+            color: #aeb8ff;
+
+            font-size: 10px;
+
+            font-weight: 600;
+
+            background:
+                rgba(91,106,255,0.09);
+
+            border:
+                1px solid
+                rgba(91,106,255,0.14);
+        }
+
+
+        .no-data {
+
+            color: #69738c;
+
+            font-size: 11px;
+
+            font-style: italic;
+        }
+
+
+        /* =========================
+           TEXT PREVIEW
+        ========================= */
+
+        .preview-box {
+
+            max-height: 180px;
+
+            overflow-y: auto;
+
+            padding:
+                13px;
+
+            border-radius: 11px;
+
+            color: #9da6bb;
+
+            font-size: 11px;
+
+            line-height: 1.7;
+
+            white-space: pre-wrap;
+
+            background:
+                rgba(0,0,0,0.16);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.05);
+        }
+
+
+        /* =========================
+           FORM
+        ========================= */
+
+        .form-label {
+
+            display: block;
+
+            margin-bottom: 10px;
+
+            color: #d9deeb;
+
+            font-size: 13px;
+
+            font-weight: 700;
+        }
+
+
+        .form-help {
+
+            color: #68728c;
+
+            font-size: 10px;
+
+            line-height: 1.6;
+
+            margin-bottom: 12px;
+        }
+
+
+        textarea {
+
+            width: 100%;
+
+            min-height: 390px;
+
+            padding:
+                17px;
+
+            resize: vertical;
+
+            outline: none;
+
+            border-radius: 14px;
+
+            color: #e8ebf4;
+
+            background:
+                rgba(0,0,0,0.22);
+
+            border:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            font-size: 12px;
+
+            line-height: 1.7;
+
+            transition: 0.25s;
+        }
+
+
+        textarea::placeholder {
+
+            color: #626c86;
+        }
+
+
+        textarea:focus {
+
+            border-color:
+                #6675ff;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(102,117,255,0.12);
+        }
+
+
+        /* =========================
+           NOTICE
+        ========================= */
+
+        .notice {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 10px;
+
+            margin-top: 13px;
+
+            padding:
+                12px;
+
+            border-radius: 11px;
+
+            color: #929bb2;
+
+            font-size: 10px;
+
+            line-height: 1.6;
+
+            background:
+                rgba(102,117,255,0.055);
+
+            border:
+                1px solid
+                rgba(102,117,255,0.09);
+        }
+
+
+        .notice-icon {
+
+            flex-shrink: 0;
+
+            font-size: 14px;
+        }
+
+
+        /* =========================
+           ACTIONS
+        ========================= */
+
+        .form-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+            gap: 9px;
+
+            margin-top: 18px;
+        }
+
+
+        .cancel-btn {
+
+            padding:
+                12px 17px;
+
+            border-radius: 10px;
+
+            color: #aeb6c9;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            border:
+                1px solid
+                rgba(255,255,255,0.08);
+
+            background:
+                rgba(255,255,255,0.045);
+
+            transition: 0.25s;
+        }
+
+
+        .cancel-btn:hover {
+
+            color: white;
+
+            background:
+                rgba(255,255,255,0.08);
+        }
+
+
+        .reanalyze-btn {
+
+            border: none;
+
+            padding:
+                13px 20px;
+
+            border-radius: 10px;
+
+            color: white;
+
+            font-size: 11px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #596aff,
+                    #8748dc
+                );
+
+            box-shadow:
+                0 10px 28px
+                rgba(89,106,255,0.22);
+
+            transition: 0.25s;
+        }
+
+
+        .reanalyze-btn:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 15px 35px
+                rgba(89,106,255,0.30);
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        .footer {
+
+            text-align: center;
+
+            margin-top: 30px;
+
+            color: #4e5770;
+
+            font-size: 10px;
+        }
+
+
+        /* =========================
+           TABLET
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .main-grid {
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .page-header {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .back-btn {
+
+                width: 100%;
+
+                justify-content: center;
+            }
+
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            .navbar {
+
+                padding:
+                    14px 4%;
+
+                flex-direction: column;
+
+                gap: 13px;
+            }
+
+
+            .logo {
+
+                justify-content: center;
+            }
+
+
+            .nav-links {
+
+                width: 100%;
+
+                display: grid;
+
+                grid-template-columns:
+                    repeat(3,1fr);
+
+                gap: 5px;
+            }
+
+
+            .nav-links a {
+
+                text-align: center;
+
+                padding:
+                    8px 4px;
+
+                font-size: 11px;
+            }
+
+
+            .container {
+
+                width: 92%;
+
+                padding:
+                    30px 0 50px;
+            }
+
+
+            .header-left {
+
+                align-items: flex-start;
+            }
+
+
+            .header-icon {
+
+                width: 52px;
+
+                height: 52px;
+
+                border-radius: 15px;
+
+                font-size: 24px;
+            }
+
+
+            .page-header h1 {
+
+                font-size: 25px;
+            }
+
+
+            .page-header p {
+
+                font-size: 11px;
+
+                line-height: 1.5;
+            }
+
+
+            .file-card {
+
+                align-items: flex-start;
+
+                flex-direction: column;
+            }
+
+
+            .scores {
+
+                width: 100%;
+            }
+
+
+            .score {
+
+                flex: 1;
+
+                text-align: center;
+            }
+
+
+            .card {
+
+                border-radius: 17px;
+            }
+
+
+            .card-body {
+
+                padding: 16px;
+            }
+
+
+            textarea {
+
+                min-height: 330px;
+
+                font-size: 11px;
+            }
+
+
+            .form-actions {
+
+                display: grid;
+
+                grid-template-columns:
+                    1fr;
+            }
+
+
+            .cancel-btn,
+            .reanalyze-btn {
+
+                width: 100%;
+
+                text-align: center;
+            }
+
+        }
+
+
+        /* =========================
+           SMALL PHONE
+        ========================= */
+
+        @media (max-width: 390px) {
+
+            .nav-links {
+
+                grid-template-columns:
+                    repeat(2,1fr);
+            }
+
+
+            .page-header h1 {
+
+                font-size: 23px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+
+    <a href="/dashboard"
+       class="logo">
+
+        <span class="logo-icon">
+            🤖
+        </span>
+
+        AI Resume Analyzer
+
+    </a>
+
+
+    <div class="nav-links">
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+        <a href="/upload">
+            Analyze
+        </a>
+
+        <a href="/history">
+            History
+        </a>
+
+        <a href="/profile">
+            Profile
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================
+     MAIN
+========================= -->
+
+<main class="container">
+
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <div class="page-header">
+
+
+        <div class="header-left">
+
+
+            <div class="header-icon">
+                ✏️
+            </div>
+
+
+            <div>
+
+                <h1>
+                    Edit Resume Analysis
+                </h1>
+
+                <p>
+                    Update the job description and re-analyze your resume.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+        <a
+            href="/history"
+            class="back-btn"
+        >
+            ← Back to History
+        </a>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         FILE INFORMATION
+    ========================= -->
+
+    <div class="file-card">
+
+
+        <div class="file-left">
+
+
+            <div class="file-icon">
+                📄
+            </div>
+
+
+            <div>
+
+                <div class="file-name">
+
+                    {{ resume.filename }}
+
+                </div>
+
+
+                <div class="file-label">
+
+                    Existing resume analysis
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="scores">
+
+
+            <div class="score">
+
+                ATS:
+                {{ resume.ats_score|default(0) }}%
+
+            </div>
+
+
+            <div class="score">
+
+                Match:
+                {{ resume.match_score|default(0) }}%
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =========================
+         MAIN GRID
+    ========================= -->
+
+    <div class="main-grid">
+
+
+        <!-- =========================
+             RESUME DETAILS
+        ========================= -->
+
+        <section class="card">
+
+
+            <div class="card-header">
+
+                <div class="card-header-icon">
+                    👤
+                </div>
+
+                <h2>
+                    Resume Details
+                </h2>
+
+            </div>
+
+
+            <div class="card-body">
+
+
+                <div class="info-list">
+
+
+                    <!-- NAME -->
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+                            Full Name
+                        </div>
+
+                        <div class="info-value">
+
+                            {{ resume.name|default("Not found") }}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+                            Email Address
+                        </div>
+
+                        <div class="info-value">
+
+                            {{ resume.email|default("Not found") }}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+                            Phone Number
+                        </div>
+
+                        <div class="info-value">
+
+                            {{ resume.phone|default("Not found") }}
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SKILLS -->
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+                            Detected Skills
+                        </div>
+
+
+                        <div class="skills">
+
+
+                            {% if resume.skills %}
+
+                                {% for skill in resume.skills.split(",") %}
+
+                                    {% if skill.strip() %}
+
+                                        <span class="skill">
+
+                                            {{ skill.strip() }}
+
+                                        </span>
+
+                                    {% endif %}
+
+                                {% endfor %}
+
+                            {% else %}
+
+                                <span class="no-data">
+                                    No skills detected.
+                                </span>
+
+                            {% endif %}
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- EDUCATION -->
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+                            Education
+                        </div>
+
+
+                        {% if resume.education %}
+
+                            <div class="preview-box">
+
+                                {{ resume.education }}
+
+                            </div>
+
+                        {% else %}
+
+                            <span class="no-data">
+                                No education information found.
+                            </span>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                    <!-- EXPERIENCE -->
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+                            Experience
+                        </div>
+
+
+                        {% if resume.experience %}
+
+                            <div class="preview-box">
+
+                                {{ resume.experience }}
+
+                            </div>
+
+                        {% else %}
+
+                            <span class="no-data">
+                                No experience information found.
+                            </span>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                    <!-- PROJECTS -->
+
+                    <div class="info-item">
+
+                        <div class="info-label">
+                            Projects
+                        </div>
+
+
+                        {% if resume.projects %}
+
+                            <div class="preview-box">
+
+                                {{ resume.projects }}
+
+                            </div>
+
+                        {% else %}
+
+                            <span class="no-data">
+                                No project information found.
+                            </span>
+
+                        {% endif %}
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =========================
+             EDIT JOB DESCRIPTION
+        ========================= -->
+
+        <section class="card">
+
+
+            <div class="card-header">
+
+                <div class="card-header-icon">
+                    💼
+                </div>
+
+                <h2>
+                    Job Description
+                </h2>
+
+            </div>
+
+
+            <div class="card-body">
+
+
+                <form
+                    action="/edit/{{ resume.id }}"
+                    method="POST"
+                >
+
+
+                    <!-- CSRF -->
+
+                    <input
+                        type="hidden"
+                        name="csrf_token"
+                        value="{{ csrf_token() }}"
+                    >
+
+
+                    <label class="form-label">
+
+                        Update Target Job Description
+
+                    </label>
+
+
+                    <div class="form-help">
+
+                        Change the job description below and click
+                        <b>Re-analyze Resume</b> to calculate a new
+                        job match and ATS analysis.
+
+                    </div>
+
+
+                    <textarea
+                        name="job_description"
+                        required
+                        placeholder="Paste the complete job description here..."
+                    >{{ resume.job_description|default("") }}</textarea>
+
+
+                    <div class="notice">
+
+                        <span class="notice-icon">
+                            💡
+                        </span>
+
+                        <span>
+
+                            Your resume information will remain the same.
+                            The analyzer will compare your existing resume
+                            against this updated job description.
+
+                        </span>
+
+                    </div>
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="form-actions">
+
+
+                        <a
+                            href="/history"
+                            class="cancel-btn"
+                        >
+                            Cancel
+                        </a>
+
+
+                        <button
+                            type="submit"
+                            class="reanalyze-btn"
+                        >
+                            🔄 Re-analyze Resume
+                        </button>
+
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+
+
+        </section>
+
+
+    </div>
+
+
+
+    <div class="footer">
+
+        AI Resume Analyzer • Intelligent Career Assistant
+
+    </div>
+
+
+</main>
+
+
+</body>
+
+</html>
